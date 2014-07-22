@@ -2,14 +2,22 @@
 
 FROM ubuntu:13.10
 
-# make sure apt is up to date
 RUN apt-get update
+RUN apt-get install -y wget
 
-# install nodejs and npm
-RUN apt-get install -y nodejs npm git git-core
+# Install Node
+RUN   \
+  cd /opt && \
+  wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x64.tar.gz && \
+  tar -xzf node-v0.10.28-linux-x64.tar.gz && \
+  mv node-v0.10.28-linux-x64 node && \
+  cd /usr/local/bin && \
+  ln -s /opt/node/bin/* . && \
+  rm -f /opt/node-v0.10.28-linux-x64.tar.gz
 
-ADD start.sh /tmp/
+# Set the working directory
+WORKDIR   /src
 
-RUN chmod +x /tmp/start.sh
+RUN npm install
 
-CMD ./tmp/start.sh
+CMD ["/bin/bash"]
