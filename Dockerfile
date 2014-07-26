@@ -27,6 +27,7 @@ USER node
 WORKDIR   /src
 
 # Install NPM dependencies
-RUN npm install
+RUN npm install -g yo
+RUN npm install -g generator-angular
 
 CMD /bin/bash
